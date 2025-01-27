@@ -1,0 +1,20 @@
+name: analytics_inspector
+description: "A simple inspector to plug to your analytics events to help debugging them without needing Debug View"
+version: 1.0.0
+homepage: https://github.com/rodrigobastosv/analytics_inspector
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
