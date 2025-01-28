@@ -9,36 +9,15 @@ class AnalyticsInspectorWidget extends StatefulWidget {
   });
 
   @override
-  State<AnalyticsInspectorWidget> createState() =>
-      _AnalyticsInspectorWidgetState();
+  State<AnalyticsInspectorWidget> createState() => _AnalyticsInspectorWidgetState();
 }
 
-class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget>
-    with SingleTickerProviderStateMixin {
+class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-  late final Stream<List<AnalyticsEvent>> _eventsStream;
-  late final Stream<List<AnalyticsScreenEvent>> _screenEventsStream;
-
-  List<AnalyticsEvent> _events = [];
-  List<AnalyticsScreenEvent> _screenEvents = [];
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    _eventsStream = AnalyticsInspector.instance.events;
-    _screenEventsStream = AnalyticsInspector.instance.screenEvents;
-
-    _eventsStream.listen(
-      (events) {
-        setState(() => _events = events);
-      },
-    );
-
-    _screenEventsStream.listen(
-      (events) {
-        setState(() => _screenEvents = events);
-      },
-    );
     super.initState();
   }
 
@@ -62,8 +41,14 @@ class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget>
       body: TabBarView(
         controller: _tabController,
         children: [
-          AnalyticsEventsListView(events: _events),
-          AnalyticsScreenEventsListView(events: _screenEvents),
+          ValueListenableBuilder(
+            valueListenable: AnalyticsInspector.instance.events,
+            builder: (context, events, child) => AnalyticsEventsListView(events: events),
+          ),
+          ValueListenableBuilder(
+            valueListenable: AnalyticsInspector.instance.screenEvents,
+            builder: (context, events, child) => AnalyticsScreenEventsListView(events: events),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
