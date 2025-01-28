@@ -1,3 +1,7 @@
+## 1.0.3+1
+
+Adjust README and add tests
+
 ## 1.0.3
 
 Change to use ValueNotifier instead of Streams

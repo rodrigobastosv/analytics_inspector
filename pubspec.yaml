@@ -1,6 +1,6 @@
 name: analytics_inspector
 description: "A simple inspector to plug to your analytics events to help debugging them without needing Debug View"
-version: 1.0.3
+version: 1.0.3+1
 homepage: https://github.com/rodrigobastosv/analytics_inspector
 
 environment:

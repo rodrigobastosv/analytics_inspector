@@ -1,3 +1,5 @@
+<a href="https://www.buymeacoffee.com/rodrigobastosv" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 A simple inspector to plug to your analytics events to help debugging them without needing Debug View
 
 ## Features
@@ -26,11 +28,11 @@ AnalyticsInspector.instance.logScreenEvent(
 );
 ```
 
-The package them exposes 2 streams for working with both Events and Screen Events:
+The package them exposes 2 Lists for working with both Events and Screen Events:
 
 ```dart
 final events = AnalyticsInspector.instance.events;
 final screenEvents = AnalyticsInspector.instance.screenEvents;
 ```
 
-The package is not opinionated on how this information should be displayed. The streams are exposed and is up to you to display the way you want it.
+The package is not opinionated on how this information should be displayed. The Lists are exposed and is up to you to display the way you want it.
