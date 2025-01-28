@@ -1,25 +1,14 @@
-import 'dart:async';
-
 import 'package:analytics_inspector/src/entities/analytics_event.dart';
 import 'package:analytics_inspector/src/entities/analytics_screen_event.dart';
+import 'package:flutter/material.dart';
 
 class AnalyticsInspector {
   AnalyticsInspector._();
 
   static AnalyticsInspector instance = AnalyticsInspector._();
 
-  final List<AnalyticsEvent> _events = [];
-  final List<AnalyticsScreenEvent> _screenEvents = [];
-
-  final StreamController<List<AnalyticsEvent>> _eventsStreamController =
-      StreamController<List<AnalyticsEvent>>();
-  final StreamController<List<AnalyticsScreenEvent>>
-      _screenEventsStreamController =
-      StreamController<List<AnalyticsScreenEvent>>();
-
-  Stream<List<AnalyticsEvent>> get events => _eventsStreamController.stream;
-  Stream<List<AnalyticsScreenEvent>> get screenEvents =>
-      _screenEventsStreamController.stream;
+  final ValueNotifier<List<AnalyticsEvent>> events = ValueNotifier<List<AnalyticsEvent>>([]);
+  final ValueNotifier<List<AnalyticsScreenEvent>> screenEvents = ValueNotifier<List<AnalyticsScreenEvent>>([]);
 
   void logEvent(String name, Map<String, dynamic> parameters) {
     final datetime = DateTime.now().toLocal();
@@ -28,8 +17,10 @@ class AnalyticsInspector {
       name: name,
       parameters: parameters,
     );
-    _events.add(event);
-    _eventsStreamController.sink.add(_events);
+    events.value = [
+      ...events.value,
+      event,
+    ];
   }
 
   void logScreenEvent(String screeName, Map<String, dynamic> parameters) {
@@ -39,14 +30,14 @@ class AnalyticsInspector {
       screeName: screeName,
       parameters: parameters,
     );
-    _screenEvents.add(event);
-    _screenEventsStreamController.sink.add(_screenEvents);
+    screenEvents.value = [
+      ...screenEvents.value,
+      event,
+    ];
   }
 
   void clear() {
-    _events.clear();
-    _screenEvents.clear();
-    _eventsStreamController.sink.add(_events);
-    _screenEventsStreamController.sink.add(_screenEvents);
+    events.value = [];
+    screenEvents.value = [];
   }
 }
