@@ -3,21 +3,25 @@ import 'analytics_events_list_view.dart';
 import 'analytics_screen_events_list_view.dart';
 import 'package:flutter/material.dart';
 
+import 'analytics_user_properties_list_view.dart';
+
 class AnalyticsInspectorWidget extends StatefulWidget {
   const AnalyticsInspectorWidget({
     super.key,
   });
 
   @override
-  State<AnalyticsInspectorWidget> createState() => _AnalyticsInspectorWidgetState();
+  State<AnalyticsInspectorWidget> createState() =>
+      _AnalyticsInspectorWidgetState();
 }
 
-class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget> with SingleTickerProviderStateMixin {
+class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget>
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -33,6 +37,7 @@ class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget> wit
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
+            Tab(text: 'User Properties'),
             Tab(text: 'Events'),
             Tab(text: 'Screen Events'),
           ],
@@ -42,12 +47,19 @@ class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget> wit
         controller: _tabController,
         children: [
           ValueListenableBuilder(
+            valueListenable: AnalyticsInspector.instance.userProperties,
+            builder: (context, userProperties, child) =>
+                AnalyticsUserPropertiesListView(userProperties: userProperties),
+          ),
+          ValueListenableBuilder(
             valueListenable: AnalyticsInspector.instance.events,
-            builder: (context, events, child) => AnalyticsEventsListView(events: events),
+            builder: (context, events, child) =>
+                AnalyticsEventsListView(events: events),
           ),
           ValueListenableBuilder(
             valueListenable: AnalyticsInspector.instance.screenEvents,
-            builder: (context, events, child) => AnalyticsScreenEventsListView(events: events),
+            builder: (context, events, child) =>
+                AnalyticsScreenEventsListView(events: events),
           ),
         ],
       ),
@@ -55,6 +67,9 @@ class _AnalyticsInspectorWidgetState extends State<AnalyticsInspectorWidget> wit
         child: const Icon(Icons.plus_one),
         onPressed: () {
           if (_tabController.index == 0) {
+            AnalyticsInspector.instance
+                .setUserProperty('user property', 'value');
+          } else if (_tabController.index == 1) {
             AnalyticsInspector.instance.logEvent('name', {});
           } else {
             AnalyticsInspector.instance.logScreenEvent('screen', {});

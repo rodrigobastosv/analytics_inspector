@@ -13,6 +13,13 @@ This package adds this thin layer that can be plugged to your analytics and you 
 Using this is as simple as adding events or screen events:
 
 ```dart
+AnalyticsInspector.instance.setUserProperty(
+    'user_property',
+    'user_property_value',
+);
+```
+
+```dart
 AnalyticsInspector.instance.logEvent(
         'my_event_name', {
         'parameter1': 'value1',
@@ -28,9 +35,10 @@ AnalyticsInspector.instance.logScreenEvent(
 );
 ```
 
-The package them exposes 2 Lists for working with both Events and Screen Events:
+The package them exposes 3 Lists for working with User Properties, Events and Screen Events:
 
 ```dart
+final userProperties = AnalyticsInspector.instance.userProperties;
 final events = AnalyticsInspector.instance.events;
 final screenEvents = AnalyticsInspector.instance.screenEvents;
 ```

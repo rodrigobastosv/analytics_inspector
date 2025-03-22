@@ -1,6 +1,10 @@
+## 1.0.4
+
+Add support to show user properties
+
 ## 1.0.3+1
 
-Adjust README and add tests
+Adjust README
 
 ## 1.0.3
 

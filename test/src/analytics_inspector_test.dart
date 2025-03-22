@@ -28,7 +28,8 @@ void main() {
       inspector.logScreenEvent('screen1', {});
 
       final screenEvents = inspector.screenEvents;
-      expect(screenEvents.value.where((event) => event.screeName == 'screen1'), isNotEmpty);
+      expect(screenEvents.value.where((event) => event.screeName == 'screen1'),
+          isNotEmpty);
     },
   );
 
